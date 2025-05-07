@@ -59,9 +59,9 @@ const Connections = () => {
           connection;
         return (
           <div className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2" key={connection._id}>
-            <figure>
+           
               <img src={photoUrl} alt="photo" className="w-25 h-25 rounded-full " />
-            </figure>
+            
             <div className="card-body text-left">
               <h2 className="card-title text-2xl font-bold">{`${firstName} ${lastName}`}</h2>
               {age && gender && <p>{`${age}, ${gender}`}</p>}
