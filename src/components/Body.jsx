@@ -10,10 +10,10 @@ import { addUser } from "../utils/userSlice";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userdata = useSelector(store => store.user)
+  const userdata = useSelector((store) => store.user);
 
   const fetchLoggedInUserProfile = async () => {
-    if (userdata) return
+    if (userdata) return;
     try {
       const res = await axios.get(BASE_URL + "/profile/view", {
         withCredentials: true,
@@ -32,9 +32,13 @@ const Body = () => {
     fetchLoggedInUserProfile();
   }, []);
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <Navbar />
-      <Outlet />
+      <div style={{ flex: 1 }}>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

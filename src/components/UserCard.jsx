@@ -1,21 +1,54 @@
+import axios from "axios";
 import React from "react";
+import { BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { removeUserFromFeed } from "../utils/feedSlice";
 
-const UserCard = ({ user }) => {
-  const { firstName, lastName, photoUrl, skills, about, age, gender } = user;
+
+const UserCard = ({ user, showButtons}) => {
+  if (!user) return ;
+  const {firstName, lastName, photoUrl, skills, about, age, gender, _id } = user;
+  console.log("userrrr", user);
+  
+  const dispatch = useDispatch();
+
+  const handleSendRequest = async (status, userId) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/send/" + status + "/" + userId,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeUserFromFeed(userId))
+    } catch (err) {
+      
+      console.log(err);
+    }
+  };
+
+  
   return (
-    <div className="card bg-base-200 w-96 shadow-lg">
-      <figure>
-        <img src={photoUrl} alt="photo" className="w-full" />
+    <div className="card bg-base-200 w-64  max-w-sm mx-auto shadow-lg">
+      <figure className="overflow-hidden ">
+        <img
+          src={photoUrl}
+          alt="photo"
+          className="w-full h-full object-cover"
+        />
       </figure>
       <div className="card-body">
         <h2 className="card-title py-2">{`${firstName} ${lastName}`}</h2>
         {age && gender && <span>{`${age}, ${gender}`}</span>}
         <span className="py-2">{about}</span>
       </div>
-      <div className="card-actions justify-center py-10">
-        <button className="btn btn-primary cursor-pointer">Ignore</button>
-        <button className="btn btn-secondary cursor-pointer">Send Request</button>
-      </div>
+      {showButtons && (
+        <div className="card-actions justify-center py-10">
+          <button className="btn btn-primary cursor-pointer" onClick={() => handleSendRequest("ignored", _id )}>Ignore</button>
+          <button className="btn btn-secondary cursor-pointer" onClick={() => handleSendRequest("interested", _id )}>
+            Send Request
+          </button>
+        </div>
+      )}
     </div>
   );
 };

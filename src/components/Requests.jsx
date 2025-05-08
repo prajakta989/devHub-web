@@ -20,13 +20,31 @@ const Requests = () => {
     }
   };
 
+  const reviewRequest = async (status, id) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + id,
+        {},
+        { withCredentials: true }
+      );
+      const filterRequests = receivedRequests.filter(
+        (request) => request._id !== id
+      );
+      setReceivedRequests(filterRequests);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getReceivedRequests();
   }, []);
 
   if (loading) {
     return (
-      <div className="text-center my-10">Loading Connection requests...</div>
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner w-24 h-24"></span>
+      </div>
     );
   }
 
@@ -41,7 +59,7 @@ const Requests = () => {
           request.fromUserId;
         return (
           <div
-            className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center"
+            className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center flex flex-col lg:flex-row"
             key={request._id}
           >
             <img
@@ -49,15 +67,25 @@ const Requests = () => {
               alt="photo"
               className="w-25 h-25 rounded-full "
             />
-            <div className="card-body text-left w-1">
-                <h2 className="card-title text-2xl font-bold">{`${firstName} ${lastName}`}</h2>
-                {age && gender && <p>{`${age}, ${gender}`}</p>}
-                <p>{about}</p>
+            <div className="card-body text-center w-full lg:w-1/2 lg:text-left">
+              <h2 className="card-title text-2xl font-bold">{`${firstName} ${lastName}`}</h2>
+              {age && gender && <p>{`${age}, ${gender}`}</p>}
+              <p>{about}</p>
             </div>
-            <div className="card-actions justify-end mt-8">
-                <button className="btn btn-primary">Reject</button>
-                <button className="btn btn-secondary">Accept</button>
-              </div>
+            <div className="card-actions justify-end mt-8 lg:mt-8 lg:ml-auto">
+              <button
+                className="btn btn-primary"
+                onClick={() => reviewRequest("rejected", request._id)}
+              >
+                Reject
+              </button>
+              <button
+                className="btn btn-secondary"
+                onClick={() => reviewRequest("accepted", request._id)}
+              >
+                Accept
+              </button>
+            </div>
           </div>
         );
       })}

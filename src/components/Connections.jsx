@@ -24,7 +24,11 @@ const Connections = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center my-10">Loading connections...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner w-24 h-24"></span>
+      </div>
+    );
   }
 
   if (!requests || requests.length === 0) {
@@ -58,10 +62,16 @@ const Connections = () => {
         const { firstName, lastName, age, gender, about, photoUrl, skills } =
           connection;
         return (
-          <div className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2" key={connection._id}>
-           
-              <img src={photoUrl} alt="photo" className="w-25 h-25 rounded-full " />
-            
+          <div
+            className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center"
+            key={connection._id}
+          >
+            <img
+              src={photoUrl}
+              alt="photo"
+              className="w-25 h-25 rounded-full object-contain"
+            />
+
             <div className="card-body text-left">
               <h2 className="card-title text-2xl font-bold">{`${firstName} ${lastName}`}</h2>
               {age && gender && <p>{`${age}, ${gender}`}</p>}
