@@ -4,6 +4,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
+import Swipe from "./Swipe";
 
 const Feed = () => {
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,17 @@ const Feed = () => {
     getFeed();
   }, []);
 
+  const handleRemoveUser = async (userId, direction) => {
+    const status = direction === "left" ? "ignored" : "interested";
+  
+    try {
+      await axios.post(`${BASE_URL}/request/send/${status}/${userId}`, {}, { withCredentials: true });
+      dispatch(removeUserFromFeed(userId)); // removes user from Redux store
+    } catch (err) {
+      console.error("Error sending request:", err);
+    }
+  };
+  
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -48,9 +60,11 @@ const Feed = () => {
     feedData && (
       <div className="flex justify-center  py-10">
         <UserCard user={feedData[0]} showButtons={true} />
+        {/* <Swipe user={feedData[0]}/> */}
       </div>
     )
   );
+  
 };
 
 export default Feed;
