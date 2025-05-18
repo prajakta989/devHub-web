@@ -63,7 +63,7 @@ const Connections = () => {
           connection;
         return (
           <div
-            className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center"
+            className=" bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center flex flex-col lg:flex-row"
             key={connection._id}
           >
             <img
@@ -72,8 +72,8 @@ const Connections = () => {
               className="w-25 h-25 rounded-full object-contain"
             />
 
-            <div className="card-body text-left">
-              <h2 className="card-title text-2xl font-bold">{`${firstName} ${lastName}`}</h2>
+            <div className="card-body text-center lg:text-left">
+              <h2 className=" text-2xl font-bold ">{`${firstName} ${lastName}`}</h2>
               {age && gender && <p>{`${age}, ${gender}`}</p>}
               <p>{about}</p>
             </div>

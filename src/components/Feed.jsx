@@ -59,8 +59,8 @@ const Feed = () => {
   return (
     feedData && (
       <div className="flex justify-center  py-10">
-        <UserCard user={feedData[0]} showButtons={true} />
-        {/* <Swipe user={feedData[0]}/> */}
+        {/* <UserCard user={feedData[0]} showButtons={true} /> */}
+        <Swipe user={feedData[0]}/>
       </div>
     )
   );

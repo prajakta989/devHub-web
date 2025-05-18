@@ -59,7 +59,7 @@ const Requests = () => {
           request.fromUserId;
         return (
           <div
-            className="card card-side bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center flex flex-col lg:flex-row"
+            className="  bg-base-200 shadow-lg w-1/2 mx-auto my-8 px-5 py-2 items-center flex flex-col lg:flex-row"
             key={request._id}
           >
             <img
@@ -68,7 +68,7 @@ const Requests = () => {
               className="w-25 h-25 rounded-full "
             />
             <div className="card-body text-center w-full lg:w-1/2 lg:text-left">
-              <h2 className="card-title text-2xl font-bold">{`${firstName} ${lastName}`}</h2>
+              <h2 className="text-2xl font-bold lg:text-left ">{`${firstName} ${lastName}`}</h2>
               {age && gender && <p>{`${age}, ${gender}`}</p>}
               <p>{about}</p>
             </div>
