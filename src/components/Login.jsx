@@ -55,7 +55,7 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center my-8">
-      <div className="card card-border bg-base-300 w-96 ">
+      <div className="  bg-base-300 w-96 ">
         <div className="card-body">
           <h2 className="card-title">{isLogin ? "Login" : "Sign Up"}</h2>
           <div>
