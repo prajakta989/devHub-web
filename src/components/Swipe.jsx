@@ -27,22 +27,28 @@ const Swipe = ({ user }) => {
   };
 
   const swipeCard = (direction) => {
-    const distance = direction === "left" ? -1000 : 1000;
-    animate(x, distance, {
-      duration: 0.4,
-      ease: "easeOut",
-      onComplete: async () => {
-        await handleSendRequest(
-          direction === "left" ? "ignored" : "interested",
-          user._id
-        );
-      },
-    });
-  };
+  const screenWidth = window.innerWidth;
+  const distance = direction === "left" ? -screenWidth : screenWidth;
+
+  animate(x, distance, {
+    duration: 0.4,
+    ease: "easeOut",
+    onComplete: async () => {
+      await handleSendRequest(
+        direction === "left" ? "ignored" : "interested",
+        user._id
+      );
+
+      // Reset x after a small delay (to give time for DOM removal)
+       x.set(0);
+    },
+  });
+};
+
 
   return (
     <motion.div
-      className="card"
+      className="card overflow-x-hidden"
       style={{ x, rotate }}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
