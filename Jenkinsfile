@@ -1,4 +1,6 @@
 pipeline{
+    agent any 
+    
     tools{
         nodejs "NODEJS18"
     }
