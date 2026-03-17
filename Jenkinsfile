@@ -23,5 +23,19 @@ pipeline{
                 sh 'npm run build'
             }
         }
+
+        stage('SonarQube Analysis') {
+            environment {
+            scannerHome = tool 'SONAR'
+            }
+            steps {
+                 withSonarQubeEnv('sonarserver') {
+                    sh '''
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=devhub-web \
+                    -Dsonar.sources=.'''
+                }
+            }
+        }
     }
 }
