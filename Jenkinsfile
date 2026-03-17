@@ -26,10 +26,11 @@ pipeline{
 
         stage('SonarQube Analysis') {
             environment {
-            scannerHome = tool 'SONAR'
+                scannerHome = tool 'SONAR'
             }
             steps {
                  withSonarQubeEnv('sonarserver') {
+                    sh 'echo $scannerHome'
                     sh '''
                     ${scannerHome}/bin/sonar-scanner \
                     -Dsonar.projectKey=devhub-web \
